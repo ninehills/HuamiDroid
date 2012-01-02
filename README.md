@@ -12,6 +12,9 @@
 
 下载apk包，安装
 
+地址：（点击图片或用Android扫描）
+
+[![HuamiDroid](https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=https://github.com/downloads/ninehills/HuamiDroid/HuamiDroid.apk)](https://github.com/downloads/ninehills/HuamiDroid/HuamiDroid.apk)
 
 授权协议
 -------
