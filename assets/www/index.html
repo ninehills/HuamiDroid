@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="1.css" />
 <script src="jquery.min.js"></script>
 <script src="md5.js"></script>
+<script type="text/javascript" src="phonegap-1.3.0.js"></script>
+<script type="text/javascript" src="clipboardmanager.js"></script>
 <script type="text/javascript">
 function countCode(){
 	var password = $("#password").val();
@@ -45,18 +47,13 @@ $(function(){//页面载入后执行的内容
 	$('#key').change(countCode);
 	$('#password').keyup(countCode);
 	$('#key').keyup(countCode);
-	//调整复制按钮位置
-	$(window).resize(function(){clip.reposition();});
-	//复制按钮的事件
-	clip.addEventListener( "mouseOver", function(client) {
-    client.setText( $("#code16").text() ); // 重新设置要复制的值
-	$('#copycode16').addClass("copycode16h");$('#code16').addClass("code16h");
-	});
-	clip.addEventListener( "mouseOut", function(client) {
-    $('#copycode16').removeClass("copycode16h");$('#code16').removeClass("code16h");
-	});
-	clip.addEventListener( "complete", function() {
-	$('#copyOK').fadeTo(0,0).css("border-color","#22B614").css("background-color","#22B614").fadeTo('normal',1).fadeTo(2000,1).fadeTo(3000,0);
+	//复制按钮事件
+	$("#copycode16").click( function() {
+		window.plugins.clipboardManager.copy(
+			$("#code16").text(),
+			function(r){alert("copy is successful")},
+			function(e){alert(e)}
+		);
 	});
 	//支持项目
 	$("#zc").click( function () { 
