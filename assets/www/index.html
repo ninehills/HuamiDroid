@@ -1,10 +1,92 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>PhoneGap</title>
-    <script type="text/javascript" charset="utf-8" src="phonegap-1.3.0.js"></script>
+﻿<!DOCTYPE HTML> 
+<html> 
+<head> 
+<meta charset="UTF-8"> 
+<title>花密 --- 可记忆的密码管理方案</title>
+<link rel="stylesheet" href="1.css" />
+<script src="jquery.min.js"></script>
+<script src="md5.js"></script>
+<script type="text/javascript">
+function countCode(){
+	var password = $("#password").val();
+	var key = $("#key").val();
+	if(password && key){
+		var md5one = $.md5(password,key);
+		var md5two = $.md5(md5one,'snow');
+		var md5three = $.md5(md5one,'kise');
+		//计算大小写
+		var rule = md5three.split("");
+		var source = md5two.split("");
+		for(var i=0;i<=31;i++){ 
+			if(isNaN(source[i])){
+				str ="sunlovesnow1990090127xykab";
+				if(str.search(rule[i]) > -1){
+					source[i] = source[i].toUpperCase();
+				}
+			}
+		}
+		var code32 = source.join("");
+		var code1 = code32.slice(0,1);
+		if(isNaN(code1)){
+			var code16 = code32.slice(0,16);
+			}else{
+			var code16 = "K" + code32.slice(1,16);
+			}
+		$("#code16").text(code16);
+		$("#code32").text(code32);
+		$("#code6").text(password);
+	}
+}
+
+$(function(){//页面载入后执行的内容
+	$('a').attr("target","_blank");
+	//监视内容改变
+	$('#password').change(countCode);
+	$('#key').change(countCode);
+	$('#password').keyup(countCode);
+	$('#key').keyup(countCode);
+	//调整复制按钮位置
+	$(window).resize(function(){clip.reposition();});
+	//复制按钮的事件
+	clip.addEventListener( "mouseOver", function(client) {
+    client.setText( $("#code16").text() ); // 重新设置要复制的值
+	$('#copycode16').addClass("copycode16h");$('#code16').addClass("code16h");
+	});
+	clip.addEventListener( "mouseOut", function(client) {
+    $('#copycode16').removeClass("copycode16h");$('#code16').removeClass("code16h");
+	});
+	clip.addEventListener( "complete", function() {
+	$('#copyOK').fadeTo(0,0).css("border-color","#22B614").css("background-color","#22B614").fadeTo('normal',1).fadeTo(2000,1).fadeTo(3000,0);
+	});
+	//支持项目
+	$("#zc").click( function () { 
+	
+		$('#zhichi').slideToggle("slow"); 
+		$('body').animate({scrollTop: $('#footer').offset().top}, 1000);
+	});
+});
+
+</script>
 </head>
 <body>
-    <h1>Hello World</h1>
+<div id="header">
+	<h1>花密 Flower Password</h1>
+</div>
+<div id="main">
+	<p>Clone from <a href="http://kisexu.com/huami/">http://kisexu.com/huami/</a></p>
+	<h2><span>1</span>输入</h2>
+	<div id="input">
+		<label for="password">记忆密码</label><input id="password" name="password" type="password" value="" tabindex="1" maxlength="20" />
+		<br />
+		<label for="key">区分代号</label><input id="key" name="key" type="text" value="" tabindex="2" maxlength="15" />
+		<p>· 记忆密码：可选择一个简单易记的密码，用于生成其他高强度密码。<br>· 区分代号：用于区别不同用途密码的简短代号，如淘宝账号可用“taobao”或“tb”等。</p>
+	</div>
+	<h2><span>2</span>获取</h2>
+	<div id="get">
+		<p id="tuijian">16位码（推荐）：<span id="code16" class="code16d">&nbsp;</span><span id="copycode16" class="copycode16d">点击复制</span><span id="copyOK">&radic; 复制成功</span></p>
+		<p class="other">32位完整MD5码：<span id="code32"></span></p>
+	</div>
+</div>
+
 </body>
 </html>
