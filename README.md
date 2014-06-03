@@ -1,6 +1,8 @@
 花密Android版
 =========
 
+> 有更好的原生版本：<https://code.google.com/p/flower-password-android/>
+
 概述
 ----
 作者：Tao Yang (<http://ninehills.github.com>)
